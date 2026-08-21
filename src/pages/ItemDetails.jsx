@@ -6,7 +6,7 @@ import nftImage from "../images/nftImage.jpg";
 
 const ItemDetails = () => {
 
-  const { id } = useParams();
+  const { id, nftId } = useParams();
   const [item, setItem] = useState(null);
 
   useEffect(() => {
@@ -14,26 +14,27 @@ const ItemDetails = () => {
 
     async function fetchData() {
        const response = await fetch(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?id=${id}`
         );
+        console.log(id)
         const result = await response.json();
-        const selectedItem = result.find(
-  (item) => item.nftId === Number(id)
-);
-
-setItem(selectedItem);;
+        setItem(result);
       }
     
       fetchData();
   }, [id]);
 
-  return (
+  if (!item) return <div>Loading...</div>
+    
+    return (
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
         <section aria-label="section" className="mt90 sm-mt-0">
           <div className="container">
             <div className="row">
+
+              
               <div className="col-md-6 text-center">
                 <img
                   src={item.nftImage}
@@ -81,13 +82,13 @@ setItem(selectedItem);;
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author/:id">
-                            <img src={item.ownerImage} className="lazyalt" alt="" />
+                          <Link to={`/author/${item.creatorId}`}>
+                            <img src={item.creatorImage} className="lazyalt" alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author/:id">Monica Lucas</Link>
+                          <Link to={`/author/${item.creatorId}`}>{item.creatorName}</Link>
                         </div>
                       </div>
                     </div>
