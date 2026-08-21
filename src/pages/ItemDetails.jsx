@@ -7,7 +7,7 @@ import nftImage from "../images/nftImage.jpg";
 const ItemDetails = () => {
 
   const { id } = useParams();
-  const [item, setItem] = useState({});
+  const [item, setItem] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,7 +17,11 @@ const ItemDetails = () => {
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
         );
         const result = await response.json();
-        setItem(result);
+        const selectedItem = result.find(
+  (item) => item.nftId === Number(id)
+);
+
+setItem(selectedItem);;
       }
     
       fetchData();
@@ -39,8 +43,7 @@ const ItemDetails = () => {
               </div>
               <div className="col-md-6">
                 <div className="item_info">
-                  <h2>{item.title}, {item.code}</h2>
-
+                  <h2>{item.title} #{item.code}</h2>
                   <div className="item_info_counts">
                     <div className="item_info_views">
                       <i className="fa fa-eye"></i>
@@ -61,13 +64,13 @@ const ItemDetails = () => {
                       <h6>Owner</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
-                            <img className="lazy" src={item.authorImage} alt="" />
+                          <Link to={`/author/${item.ownerId}`}>
+                            <img src={item.ownerImage} className="lazy" alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author">Monica Lucas</Link>
+                          <Link to={`/author/${item.ownerId}`}>{item.ownerName}</Link>
                         </div>
                       </div>
                     </div>
@@ -78,21 +81,21 @@ const ItemDetails = () => {
                       <h6>Creator</h6>
                       <div className="item_author">
                         <div className="author_list_pp">
-                          <Link to="/author">
-                            <img className="lazy" src={item.authorImage} alt="" />
+                          <Link to="/author/:id">
+                            <img src={item.ownerImage} className="lazyalt" alt="" />
                             <i className="fa fa-check"></i>
                           </Link>
                         </div>
                         <div className="author_list_info">
-                          <Link to="/author">Monica Lucas</Link>
+                          <Link to="/author/:id">Monica Lucas</Link>
                         </div>
                       </div>
                     </div>
                     <div className="spacer-40"></div>
                     <h6>Price</h6>
                     <div className="nft-item-price">
-                      <img src={item.nftImage} alt="" />
-                      <span>1.85</span>
+                      <img src={EthImage} alt="" />
+                      <span>{item.price}</span>
                     </div>
                   </div>
                 </div>
