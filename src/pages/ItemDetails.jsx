@@ -3,24 +3,30 @@ import EthImage from "../images/ethereum.svg";
 import { Link, useParams } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import nftImage from "../images/nftImage.jpg";
+import axios from "axios";
 
 const ItemDetails = () => {
-  const { id } = useParams();
+  const { nftId } = useParams();
   const [item, setItem] = useState(null);
+  const price = ((nftId.split("").reduce((total, char) => total + char.charCodeAt(0), 0) % 90) /
+    100 +
+  0.1
+).toFixed(2);
 
   useEffect(() => {
+  const fetchItem = async () => {
     window.scrollTo(0, 0);
 
-    async function fetchData() {
-      const response = await fetch(
-        `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${id}`,
-      );
-      const result = await response.json();
-      setItem(result);
-    }
+    const { data } = await axios.get(
+      `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`
+    );
+    console.log(data)
 
-    fetchData();
-  }, [id]);
+    setItem(data);
+  };
+
+  fetchItem();
+}, [nftId]);
 
   if (!item) return <div>Loading...</div>;
 
@@ -106,7 +112,7 @@ const ItemDetails = () => {
                     <h6>Price</h6>
                     <div className="nft-item-price">
                       <img src={EthImage} alt="" />
-                      <span>{item.price}</span>
+                      <span>{price}</span>
                     </div>
                   </div>
                 </div>
