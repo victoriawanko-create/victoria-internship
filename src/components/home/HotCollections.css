@@ -19,3 +19,10 @@
   color: #8364e8;
   opacity: 1;
 }
+
+.skeleton { 
+  background: #e0e0e0;
+  border-radius: 6px;
+  height: 200px;
+  width: 100%; 
+}
