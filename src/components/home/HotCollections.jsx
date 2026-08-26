@@ -5,10 +5,19 @@ import nftImage from "../../images/nftImage.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./HotCollections.css";
+
 
 const HotCollections = () => {
 
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+const setting = {
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  arrows: true
+};
 
   useEffect (() => {
     async function fetchData() {
@@ -18,16 +27,18 @@ const HotCollections = () => {
     );
     const result = await response.json();
     setData(result);
+    
+    setTimeout(() => {
+    setLoading(false);
+    }, 2000);
   }
 
   fetchData();
 }, []);
 
-const setting = {
-  slidesToShow: 4,
-  slidesToScroll: 1,
-  arrows: true
-};
+if (loading) {
+  return <div>Loading...</div>;
+}
 
   return (
     <section id="section-collections" className="no-bottom">
