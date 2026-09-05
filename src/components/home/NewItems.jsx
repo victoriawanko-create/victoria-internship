@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
-import nftImage from "../../images/nftImage.jpg";
 import Slider from "react-slick"
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./NewItems.css";
 
 const NewItems = () => {
 
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const setting = {
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  arrows: true
+};
 
   useEffect (() => {
     async function fetchData() {
@@ -14,7 +23,8 @@ const NewItems = () => {
          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
     );
     const result = await response.json();
-    setData(result)
+    setData(result);
+    setLoading(false);
     }
     fetchData();
   }, [])
@@ -29,13 +39,25 @@ const NewItems = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
+          
 
-          <Slider>
-          {new Array(4).fill(0).map((item, index) => (
+          <Slider {...setting}>
+            {loading ? (
+              new Array(4).fill(0).map((_, index) => (
+                <div key={index}>
+                  <div className="nft__item">
+                    <div className="nft__item_wrap skeleton"></div>
+                      </div>
+                        </div>
+                          ))
 
+                        ) : (
 
-            <div key={index}>
-              <div className="nft__item">
+                          data.map((item, index) => (
+                            <div key={index}>
+
+                <div className="nft__item">
+                
                 <div className="author_list_pp">
                   <Link
                     to={`/author/${item.authorId}`}
@@ -47,6 +69,7 @@ const NewItems = () => {
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
+
                 <div className="de_countdown">5h 30m 32s</div>
 
                 <div className="nft__item_wrap">
@@ -73,6 +96,7 @@ const NewItems = () => {
                     <img src={item.nftImage} className="lazy nft__item_preview" alt="" />
                   </Link>
                 </div>
+
                 <div className="nft__item_info">
                   <Link to="/item-details">
                     <h4>{item.title}</h4>
@@ -80,18 +104,19 @@ const NewItems = () => {
                   <div className="nft__item_price">{item.price} ETH</div>
                   <div className="nft__item_like">
                     <i className="fa fa-heart"></i>
-                    <span>69</span>
+                    <span>{item.likes}</span>
                   </div>
+                  </div>
+
                 </div>
               </div>
-            </div>
-          ))}
-          </Slider>
+            ))
+          )}
+        </Slider> 
         </div>
-      </div>
+        </div>
     </section>
-  );
-
-  };
+ )
+      };
 
 export default NewItems;
