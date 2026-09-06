@@ -18,15 +18,28 @@ const NewItems = () => {
 };
 
   useEffect (() => {
+
+    let timer;
+
+
     async function fetchData() {
-      const response = await fetch(
+      setLoading(true);
+
+      try {
+        const response = await fetch(
          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
     );
     const result = await response.json();
     setData(result);
-    setLoading(false);
-    }
-    fetchData();
+      } catch (error) {
+        console.error("Failed to fetch data");
+      } finally {
+        timer = setTimeout(() => setLoading(false), 2000)
+      }
+    }  
+    
+      fetchData();
+      return () => clearTimeout(timer);
   }, [])
 
  return (
