@@ -73,12 +73,12 @@ const NewItems = () => {
                 
                 <div className="author_list_pp">
                   <Link
-                    to={`/author/${item.authorId}`}
+                    to={`/author/:id${item.authorId}`}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="Creator: Monica Lucas"
                   >
-                    <img className="lazy" src={item.authorImage} alt="" />
+                    <img className="lazy" src={`${item.authorImage}`} alt="" />
                     <i className="fa fa-check"></i>
                   </Link>
                 </div>
