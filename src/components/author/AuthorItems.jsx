@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const AuthorItems = ({ items, loading }) => {
+const AuthorItems = ({ items, loading, authorImage }) => {
   console.log(items);
   return (
     <div className="de_tab_content">
@@ -14,12 +14,7 @@ const AuthorItems = ({ items, loading }) => {
                   key={index}
                 >
                   <div className="nft__item">
-                    <div className="author_list_pp">
-                      <Link to={`/author-details/`}>
-                        <img className="lazy" src={""} alt="" />
-                        <i className="fa fa-check"></i>
-                      </Link>
-                    </div>
+                    <div className="author_list_pp">...Loading</div>
                     <div className="nft__item_wrap">
                       <div className="nft__item_extra">
                         <div className="nft__item_buttons">
@@ -70,7 +65,7 @@ const AuthorItems = ({ items, loading }) => {
                   <div className="nft__item">
                     <div className="author_list_pp">
                       <Link to={`/author-details/`}>
-                        <img className="lazy" src={""} alt="" />
+                        <img className="lazy" src={authorImage} alt="" />
                         <i className="fa fa-check"></i>
                       </Link>
                     </div>
@@ -102,7 +97,7 @@ const AuthorItems = ({ items, loading }) => {
                     </div>
                     <div className="nft__item_info">
                       <Link to={`/item-details/${""}`}>
-                        <h4>{}</h4>
+                        <h4>{item.title}</h4>
                       </Link>
                       <div className="nft__item_price">{item.price} ETH</div>
                       <div className="nft__item_like">

@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 const Author = () => {
+
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [author, setAuthor] = useState({
@@ -19,10 +20,12 @@ const Author = () => {
     id: 0,
     nftCollection: [],
   });
-
+      
   const fetchItems = async () => {
-    try {
+      
       window.scrollTo(0, 0);
+
+      setLoading(true);
 
       const { data } = await axios.get(
         `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`,
@@ -47,16 +50,20 @@ const Author = () => {
         tag,
         nftCollection,
       });
-    } catch (error) {
-      console.log("Error in author.jsx: ", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   useEffect(() => {
-    fetchItems();
-  }, [id]);
+
+  let timer;
+
+  fetchItems();
+
+  timer = setTimeout(() => {
+    setLoading(false);
+  }, 2000);
+
+  return () => clearTimeout(timer);
+}, [id]);
 
   return (
     <div id="wrapper">
@@ -144,7 +151,7 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems items={author.nftCollection} loading={loading} />
+                  <AuthorItems items={author.nftCollection} loading={loading} authorImage={author.authorImage}/>
                 </div>
               </div>
             </div>
@@ -154,5 +161,6 @@ const Author = () => {
     </div>
   );
 };
+
 
 export default Author;

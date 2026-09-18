@@ -24,7 +24,6 @@ const NewItems = () => {
 
     async function fetchData() {
       setLoading(true);
-
       try {
         const response = await fetch(
          "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems"
@@ -66,7 +65,7 @@ const NewItems = () => {
 
                         ) : (
 
-                          data.map((item, index) => (
+                          data.map((item, index) => ( 
                             <div key={index}>
 
                 <div className="nft__item">
@@ -130,6 +129,6 @@ const NewItems = () => {
         </div>
     </section>
  )
-      };
+};
 
 export default NewItems;
