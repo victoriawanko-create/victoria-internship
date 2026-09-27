@@ -84,11 +84,15 @@ const Author = () => {
               <div className="col-md-12">
                 {loading ? (
                   <div className="d_profile de-flex">
+                    Loading...
                     <div className="de-flex-col">
                       <div className="profile_avatar">
-                        <img src={AuthorImage} alt="" />
-                        {/* REPLACE WITH SKELETON LOADING STATE */}
+                       <div className="profile_avatar skeleton"></div>
+                       
                         <i className="fa fa-check"></i>
+                        <i className="fa fa-check skeleton"></i>
+                        
+                       
                         <div className="profile_name">
                           <h4>
                             Loading...
