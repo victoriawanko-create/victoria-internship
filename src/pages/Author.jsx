@@ -5,6 +5,8 @@ import AuthorImage from "../images/author_thumbnail.jpg";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import "../components/home/NewItems.css";
+
 
 const Author = () => {
 
@@ -84,35 +86,24 @@ const Author = () => {
               <div className="col-md-12">
                 {loading ? (
                   <div className="d_profile de-flex">
-                    Loading...
                     <div className="de-flex-col">
                       <div className="profile_avatar">
-                       <div className="profile_avatar skeleton"></div>
-                       
-                        <i className="fa fa-check"></i>
-                        <i className="fa fa-check skeleton"></i>
-                        
-                       
+                       <div className="profile_avatar author__skeleton"></div>
+                       <div className="profile_check author__skeleton"></div>
+                       </div>
                         <div className="profile_name">
                           <h4>
-                            Loading...
-                            <span className="profile_username">Loading...</span>
+                            <span className="profile_username"></span>
                             <span id="wallet" className="profile_wallet">
-                              Loading...
                             </span>
-                            <button id="btn_copy" title="Copy Text">
-                              Copy
-                            </button>
+                            <button className= "author__skeleton copy__skeleton" id="btn_copy" title="Copy Text"></button>
                           </h4>
-                        </div>
                       </div>
                     </div>
                     <div className="profile_follow de-flex">
                       <div className="de-flex-col">
-                        <div className="profile_follower">Loading...</div>
-                        <Link to="#" className="btn-main">
-                          Follow
-                        </Link>
+                        <div className="profile_follower"></div>
+                        <Link to="#" className="btn-main copy__skeleton"></Link>
                       </div>
                     </div>
                   </div>

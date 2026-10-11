@@ -20,11 +20,15 @@
   opacity: 1;
 }
 
-.skeleton { 
+.author__skeleton { 
   background: #e0e0e0;
   border-radius: 6px;
-  height: 200px;
-  width: 100%; 
+}
+
+.copy__skeleton {
+  width: 50px;
+  height: 24px;
+  border: none;
 }
 
 .card__container {
