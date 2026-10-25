@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const AuthorItems = ({ items, loading, authorImage }) => {
+const AuthorItems = ({ items, loading, authorImage, authorId }) => {
   console.log(items);
   return (
     <div className="de_tab_content">
@@ -33,22 +33,14 @@ const AuthorItems = ({ items, loading, authorImage }) => {
                           </div>
                         </div>
                       </div>
-                      <Link to={`/item-details/`}>
-                        <img
-                          src={""}
-                          className="lazy nft__item_preview"
-                          alt=""
-                        />
-                      </Link>
+                      
                     </div>
                     <div className="nft__item_info">
-                      <Link to={`/item-details/${""}`}>
-                        <h4>{}</h4>
-                      </Link>
-                      <div className="nft__item_price">{""} ETH</div>
+                      
+                      
                       <div className="nft__item_like">
                         <i className="fa fa-heart"></i>
-                        <span>{""}</span>
+                       
                       </div>
                     </div>
                   </div>
@@ -64,7 +56,7 @@ const AuthorItems = ({ items, loading, authorImage }) => {
                 >
                   <div className="nft__item">
                     <div className="author_list_pp">
-                      <Link to={`/author-details/`}>
+                      <Link to={`/author/${authorId}`}>
                         <img className="lazy" src={authorImage} alt="" />
                         <i className="fa fa-check"></i>
                       </Link>
@@ -87,7 +79,7 @@ const AuthorItems = ({ items, loading, authorImage }) => {
                           </div>
                         </div>
                       </div>
-                      <Link to={`/item-details/`}>
+                      <Link to={`/item-details/${item.nftId}`}>
                         <img
                           src={item.nftImage}
                           className="lazy nft__item_preview"
@@ -96,7 +88,7 @@ const AuthorItems = ({ items, loading, authorImage }) => {
                       </Link>
                     </div>
                     <div className="nft__item_info">
-                      <Link to={`/item-details/${""}`}>
+                      <Link to={`/item-details/${item.nftId}`}>
                         <h4>{item.title}</h4>
                       </Link>
                       <div className="nft__item_price">{item.price} ETH</div>

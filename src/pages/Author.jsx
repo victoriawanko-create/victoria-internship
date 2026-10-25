@@ -1,6 +1,5 @@
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import AuthorImage from "../images/author_thumbnail.jpg";
 
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -146,7 +145,12 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems items={author.nftCollection} loading={loading} authorImage={author.authorImage}/>
+                  <AuthorItems
+                    items={author.nftCollection} 
+                    loading={loading} 
+                    authorImage={author.authorImage} 
+                    authorId={id} 
+                  />
                 </div>
               </div>
             </div>
