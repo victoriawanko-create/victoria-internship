@@ -6,11 +6,12 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import "../components/home/NewItems.css";
 
-
 const Author = () => {
 
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
+  const [followers, setFollowers] = useState(0);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [author, setAuthor] = useState({
     address: "",
     authorId: "",
@@ -21,7 +22,16 @@ const Author = () => {
     id: 0,
     nftCollection: [],
   });
-      
+
+  const handleFollowClick = () => {
+  if (isFollowing) {
+    setFollowers(prev => prev - 1); 
+  } else {
+    setFollowers(prev => prev + 1); 
+  }
+  setIsFollowing(prev => !prev); 
+};
+
   const fetchItems = async () => {
       
       window.scrollTo(0, 0);
@@ -51,6 +61,7 @@ const Author = () => {
         tag,
         nftCollection,
       });
+      setFollowers(followers);
     };
 
   useEffect(() => {
@@ -132,11 +143,11 @@ const Author = () => {
                     <div className="profile_follow de-flex">
                       <div className="de-flex-col">
                         <div className="profile_follower">
-                          {author.followers} followers
+                          {followers} followers
                         </div>
-                        <Link to="#" className="btn-main">
-                          Follow
-                        </Link>
+                        <button onClick={handleFollowClick} className="btn-main">
+                          {isFollowing ? "Unfollow" : "Follow"}
+                        </button>
                       </div>
                     </div>
                   </div>
