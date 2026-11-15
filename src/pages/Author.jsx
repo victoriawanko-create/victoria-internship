@@ -10,6 +10,8 @@ const Author = () => {
 
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
+  const [followers, setFollowers] = useState(author.followers);
+  const [isFollowing, setIsFollowing] = useState(false);
   const [author, setAuthor] = useState({
     address: "",
     authorId: "",
@@ -20,7 +22,16 @@ const Author = () => {
     id: 0,
     nftCollection: [],
   });
-      
+
+  const handleFollowClick = () => {
+  if (isFollowing) {
+    setFollowers(prev => prev - 1); 
+  } else {
+    setFollowers(prev => prev + 1); 
+  }
+  setIsFollowing(prev => !prev); 
+};
+
   const fetchItems = async () => {
       
       window.scrollTo(0, 0);
@@ -50,6 +61,7 @@ const Author = () => {
         tag,
         nftCollection,
       });
+      setFollowers(followers);
     };
 
   useEffect(() => {
@@ -133,8 +145,8 @@ const Author = () => {
                         <div className="profile_follower">
                           {author.followers} followers
                         </div>
-                        <Link to="#" className="btn-main">
-                          Follow
+                        <Link onClick={handleFollowClick} to="#" className="btn-main">
+                          {isFollowing ? "Unfollow" : "Follow"}
                         </Link>
                       </div>
                     </div>
