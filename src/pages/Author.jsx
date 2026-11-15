@@ -10,7 +10,7 @@ const Author = () => {
 
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const [followers, setFollowers] = useState(author.followers);
+  const [followers, setFollowers] = useState(0);
   const [isFollowing, setIsFollowing] = useState(false);
   const [author, setAuthor] = useState({
     address: "",
@@ -143,11 +143,11 @@ const Author = () => {
                     <div className="profile_follow de-flex">
                       <div className="de-flex-col">
                         <div className="profile_follower">
-                          {author.followers} followers
+                          {followers} followers
                         </div>
-                        <Link onClick={handleFollowClick} to="#" className="btn-main">
+                        <button onClick={handleFollowClick} className="btn-main">
                           {isFollowing ? "Unfollow" : "Follow"}
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>
