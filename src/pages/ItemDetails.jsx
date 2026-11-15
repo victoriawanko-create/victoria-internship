@@ -2,40 +2,47 @@ import React, { useEffect, useState } from "react";
 import EthImage from "../images/ethereum.svg";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import "../components/home/NewItems.css";
 
 const ItemDetails = () => {
   const { nftId } = useParams();
   const [item, setItem] = useState(null);
-  const price = ((nftId.split("").reduce((total, char) => total + char.charCodeAt(0), 0) % 90) /
-    100 +
-  0.1
-).toFixed(2);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
+    let timer; 
+
   const fetchItem = async () => {
     window.scrollTo(0, 0);
+
+    setLoading(true);
 
     const { data } = await axios.get(
       `https://us-central1-nft-cloud-functions.cloudfunctions.net/itemDetails?nftId=${nftId}`
     );
-    console.log(data)
 
     setItem(data);
+   
+    timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
 
   fetchItem();
-}, [nftId]);
-
-  if (!item) return <div>Loading...</div>;
+    return () => clearTimeout(timer);
+  }, [nftId]);
 
   return (
+    
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
         <section aria-label="section" className="mt90 sm-mt-0">
           <div className="container">
             <div className="row">
-              <div className="col-md-6 text-center">
+              
+              <div className="col-md-6 text-center author__skeleton">
                 <img
                   src={item.nftImage}
                   className="img-fluid img-rounded mb-sm-30 nft-image"
@@ -45,22 +52,20 @@ const ItemDetails = () => {
               <div className="col-md-6">
                 <div className="item_info">
                   <h2>
-                    {item.title} #{item.code}
+                    {item.title} #{item.tag}
                   </h2>
                   <div className="item_info_counts">
                     <div className="item_info_views">
                       <i className="fa fa-eye"></i>
-                      100
+                      {item.views}
                     </div>
                     <div className="item_info_like">
                       <i className="fa fa-heart"></i>
-                      74
+                      {item.likes}
                     </div>
                   </div>
                   <p>
-                    doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                    illo inventore veritatis et quasi architecto beatae vitae
-                    dicta sunt explicabo.
+                    {item.description}
                   </p>
                   <div className="d-flex flex-row">
                     <div className="mr40">
@@ -110,7 +115,7 @@ const ItemDetails = () => {
                     <h6>Price</h6>
                     <div className="nft-item-price">
                       <img src={EthImage} alt="" />
-                      <span>{price}</span>
+                      <span>{item.price} ETH </span>
                     </div>
                   </div>
                 </div>
